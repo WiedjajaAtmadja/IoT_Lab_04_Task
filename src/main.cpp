@@ -13,6 +13,16 @@ void taskBlinkRed(void *pvParameters) {
   }
 }
 
+void taskBlinkYellow(void *pvParameters) {
+  while (1) {
+    Serial.println("taskBlinkYellow");
+    digitalWrite(LED_YELLOW, HIGH);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+    digitalWrite(LED_YELLOW, LOW);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+  }
+}
+
 void taskBlinkGreen(void *pvParameters) {
   while (1) {
     Serial.println("taskBlinkGreen");
@@ -35,6 +45,7 @@ void setup() {
   digitalWrite(LED_RED, LOW);
 
   xTaskCreatePinnedToCore(taskBlinkRed, "taskBlinkRed", 2048, NULL, 1, NULL, 0);
+  xTaskCreatePinnedToCore(taskBlinkYellow, "taskBlinkYellow", 2048, NULL, 1, NULL, 0);
   xTaskCreatePinnedToCore(taskBlinkGreen, "taskBlinkGreen", 2048, NULL, 1, NULL, 0);
   Serial.println("System ready");
 }
